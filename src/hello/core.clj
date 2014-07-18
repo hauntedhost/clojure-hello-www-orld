@@ -2,7 +2,8 @@
   (:use compojure.core)
   (:require
     [ring.adapter.jetty :as jetty]
-    [clostache.parser :as clostache]))
+    [clostache.parser :as clostache]
+    [compojure.route :as route]))
 
 (defn read-template [template-name]
   (slurp (clojure.java.io/resource
@@ -15,7 +16,9 @@
   (render-template "index" {:greeting "Bonjour"}))
 
 (defroutes main-routes
-  (GET "/" [] (index)))
+  (GET "/" [] (index))
+  (route/resources "/")
+  (route/not-found "404 Not Found"))
 
 (defn -main []
   (jetty/run-jetty main-routes {:port 5000}))
