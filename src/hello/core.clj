@@ -21,4 +21,5 @@
   (route/not-found "404 Not Found"))
 
 (defn -main []
-  (jetty/run-jetty main-routes {:port 5000}))
+  (let [port (Integer/parseInt (get (System/getenv) "PORT" "5000"))]
+    (jetty/run-jetty main-routes {:port port})))
