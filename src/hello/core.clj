@@ -1,6 +1,9 @@
-(ns hello.core)
+(ns hello.core
+  (:require
+    [ring.adapter.jetty :as jetty]))
 
-(defn foo
-  "I don't do a whole lot."
-  [x]
-  (println x "Hello, World!"))
+(defn -main []
+  (jetty/run-jetty
+    (fn [req] {:status 200
+               :body "hello world"})
+    {:port 5000}))
